@@ -213,6 +213,73 @@ function StockSearch({ onSearch, placeholder, className = '' }: StockSearchProps
 }
 
 // ============================================================================
+// Mini Sparkline Chart Component
+// ============================================================================
+
+function MiniSparkline({ isPositive }: { isPositive: boolean }) {
+  const [points, setPoints] = useState<number[]>([])
+
+  useEffect(() => {
+    // Generate realistic stock movement pattern
+    const generateStockPattern = () => {
+      const numPoints = 20
+      const newPoints = []
+      let value = 50
+
+      for (let i = 0; i < numPoints; i++) {
+        // Add trend bias based on whether stock is up or down
+        const trendBias = isPositive ? 0.1 : -0.1
+        value += (Math.random() - 0.5 + trendBias) * 6
+        value = Math.max(20, Math.min(80, value))
+        newPoints.push(value)
+      }
+      return newPoints
+    }
+
+    setPoints(generateStockPattern())
+  }, [isPositive])
+
+  if (points.length === 0) return null
+
+  const pathData = points.map((y, i) => {
+    const x = (i / (points.length - 1)) * 100
+    return `${i === 0 ? 'M' : 'L'} ${x} ${y}`
+  }).join(' ')
+
+  return (
+    <div className="w-full h-12 relative">
+      <svg
+        viewBox="0 0 100 100"
+        preserveAspectRatio="none"
+        className="w-full h-full"
+      >
+        <defs>
+          <linearGradient id={`gradient-${isPositive ? 'positive' : 'negative'}`} x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor={isPositive ? '#10B981' : '#EF4444'} stopOpacity="0.3" />
+            <stop offset="100%" stopColor={isPositive ? '#10B981' : '#EF4444'} stopOpacity="0" />
+          </linearGradient>
+        </defs>
+
+        {/* Fill area under line */}
+        <path
+          d={`${pathData} L 100 100 L 0 100 Z`}
+          fill={`url(#gradient-${isPositive ? 'positive' : 'negative'})`}
+        />
+
+        {/* Line */}
+        <path
+          d={pathData}
+          fill="none"
+          stroke={isPositive ? '#10B981' : '#EF4444'}
+          strokeWidth="2"
+          vectorEffect="non-scaling-stroke"
+        />
+      </svg>
+    </div>
+  )
+}
+
+// ============================================================================
 // Real Companies Showcase
 // ============================================================================
 
@@ -264,6 +331,11 @@ function RealCompaniesShowcase() {
                       ({stock.change >= 0 ? '+' : ''}{stock.changePercent.toFixed(2)}%)
                     </span>
                   </div>
+                </div>
+
+                {/* Mini sparkline chart showing trend */}
+                <div className="mt-4">
+                  <MiniSparkline isPositive={stock.change >= 0} />
                 </div>
 
                 <div className="mt-4 pt-4 border-t border-[#64748B]/10">
