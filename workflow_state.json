@@ -1,6 +1,7 @@
 {
   "workflow_name": "StockAI Multi-Agent Workflow",
   "created_at": "2026-02-06",
+  "updated_at": "2026-02-06",
   "agents": {
     "stock_analysis_coordinator": {
       "agent_id": "6985a0d88ce1fc653cfdee14",
@@ -9,7 +10,8 @@
       "managed_agents": [
         "6985a0a3094c8b2d4207dd88",
         "6985a0b2301c62c7ca2c7d76",
-        "6985a0c3e17e33c11eed1b22"
+        "6985a0c3e17e33c11eed1b22",
+        "6985a65fb37fff3a03c07c9e"
       ]
     },
     "technical_analysis_agent": {
@@ -26,11 +28,21 @@
       "agent_id": "6985a0c3e17e33c11eed1b22",
       "name": "News Sentiment Agent",
       "type": "sub_agent"
+    },
+    "sector_trends_analysis_agent": {
+      "agent_id": "6985a65fb37fff3a03c07c9e",
+      "name": "Sector Trends Analysis Agent",
+      "type": "sub_agent"
+    },
+    "ai_chatbot_analyst": {
+      "agent_id": "6985a64ae2c0086a4fc43bf5",
+      "name": "AI Chatbot Analyst",
+      "type": "standalone"
     }
   },
   "workflow_structure": {
-    "pattern": "manager_subagent",
-    "node_count": 6,
-    "edge_count": 5
+    "pattern": "manager_subagent_plus_standalone",
+    "node_count": 8,
+    "edge_count": 7
   }
 }

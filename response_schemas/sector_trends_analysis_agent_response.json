@@ -1,0 +1,109 @@
+{
+  "agent_name": "Sector Trends Analysis Agent",
+  "agent_id": "6985a65fb37fff3a03c07c9e",
+  "agent_purpose": "sector_analysis",
+  "description": "Analyzes sector performance, peer comparisons, and industry trends for stock contextualization",
+  "response_schema": {
+    "status": "string",
+    "result": {
+      "sector": "string",
+      "sectorPerformance": "string",
+      "sectorIndex": "string",
+      "stockVsSector": "string",
+      "peerComparison": [
+        {
+          "ticker": "string",
+          "name": "string",
+          "relativePerformance": "string"
+        }
+      ],
+      "sectorHealth": "string",
+      "industryTrends": [
+        "string"
+      ],
+      "rotationSignal": "string",
+      "sectorRisk": "string"
+    },
+    "metadata": {
+      "agent_name": "string",
+      "timestamp": "string"
+    }
+  },
+  "example_response": {
+    "status": "success",
+    "result": {
+      "sector": "Technology",
+      "sectorPerformance": "outperforming",
+      "sectorIndex": "S&P Tech Select",
+      "stockVsSector": "+5.2%",
+      "peerComparison": [
+        {
+          "ticker": "MSFT",
+          "name": "Microsoft",
+          "relativePerformance": "+2.1%"
+        },
+        {
+          "ticker": "AAPL",
+          "name": "Apple",
+          "relativePerformance": "+3.5%"
+        },
+        {
+          "ticker": "GOOGL",
+          "name": "Alphabet",
+          "relativePerformance": "-0.8%"
+        }
+      ],
+      "sectorHealth": "strong",
+      "industryTrends": [
+        "Cloud computing growth",
+        "AI integration"
+      ],
+      "rotationSignal": "growth-favored",
+      "sectorRisk": "medium"
+    },
+    "metadata": {
+      "agent_name": "Sector Trends Analysis Agent",
+      "timestamp": "2023-10-29T10:00:00Z"
+    }
+  },
+  "is_actual_tested": true,
+  "test_timestamp": "2026-02-06T08:29:26.624224",
+  "test_message_used": "Hello, provide a sample response",
+  "actual_test_response": {
+    "status": "success",
+    "result": {
+      "sector": "Technology",
+      "sectorPerformance": "outperforming",
+      "sectorIndex": "S&P Tech Select",
+      "stockVsSector": "+5.2%",
+      "peerComparison": [
+        {
+          "ticker": "MSFT",
+          "name": "Microsoft",
+          "relativePerformance": "+2.1%"
+        },
+        {
+          "ticker": "AAPL",
+          "name": "Apple",
+          "relativePerformance": "+3.5%"
+        },
+        {
+          "ticker": "GOOGL",
+          "name": "Alphabet",
+          "relativePerformance": "-0.8%"
+        }
+      ],
+      "sectorHealth": "strong",
+      "industryTrends": [
+        "Cloud computing growth",
+        "AI integration"
+      ],
+      "rotationSignal": "growth-favored",
+      "sectorRisk": "medium"
+    },
+    "metadata": {
+      "agent_name": "Sector Trends Analysis Agent",
+      "timestamp": "2023-10-29T10:00:00Z"
+    }
+  }
+}

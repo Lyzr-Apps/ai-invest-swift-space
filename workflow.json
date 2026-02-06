@@ -55,6 +55,28 @@
       "agentId": "6985a0c3e17e33c11eed1b22"
     },
     {
+      "id": "sector_agent",
+      "type": "Agent",
+      "label": "Sector Trends Analysis Agent",
+      "nodeCategory": "agent",
+      "position": {
+        "x": 950,
+        "y": 550
+      },
+      "agentId": "6985a65fb37fff3a03c07c9e"
+    },
+    {
+      "id": "chatbot_agent",
+      "type": "Agent",
+      "label": "AI Chatbot Analyst",
+      "nodeCategory": "agent",
+      "position": {
+        "x": 1000,
+        "y": 100
+      },
+      "agentId": "6985a64ae2c0086a4fc43bf5"
+    },
+    {
       "id": "output_node",
       "type": "Output",
       "label": "Final Analysis Report",
@@ -81,6 +103,14 @@
     {
       "source": "stock_coordinator",
       "target": "sentiment_agent"
+    },
+    {
+      "source": "stock_coordinator",
+      "target": "sector_agent"
+    },
+    {
+      "source": "input_node",
+      "target": "chatbot_agent"
     },
     {
       "source": "stock_coordinator",

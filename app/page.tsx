@@ -1,94 +1,35 @@
 'use client'
 
 /**
- * StockAI - Institutional-grade stock analysis with AI
- * Complete landing page and stock analysis interface
+ * StockAI - Enhanced AI-Powered Financial Intelligence Platform
+ * Complete homepage with hero, features, and real company showcase
  */
 
 import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
-import { callAIAgent } from '@/lib/aiAgent'
+import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
+import { Badge } from '@/components/ui/badge'
 import {
   Search,
   TrendingUp,
   BarChart3,
   Newspaper,
-  ChevronDown,
-  Loader2,
-  AlertCircle,
-  CheckCircle2,
-  XCircle,
-  Activity
+  Brain,
+  BookOpen,
+  Target,
+  Shield,
+  Zap,
+  ArrowRight,
+  Activity,
+  Star,
+  TrendingDown,
+  ChevronRight
 } from 'lucide-react'
 
 // ============================================================================
-// TypeScript Interfaces from Response Schemas
-// ============================================================================
-
-interface TechnicalAnalysisResult {
-  rsi: number
-  rsiSignal: string
-  macd: string
-  macdDate: string
-  ma50: number
-  ma200: number
-  priceVsMa: string
-  volumeTrend: string
-  overallSignal: string
-}
-
-interface FundamentalAnalysisResult {
-  peRatio: number
-  sectorAvgPE: number
-  debtToEquity: number
-  earningsGrowthYoY: number
-  revenueGrowthYoY: number
-  healthScore: number
-  fundamentalSignal: string
-  concerns: string[]
-  strengths: string[]
-}
-
-interface NewsArticle {
-  title: string
-  source: string
-  date: string
-  sentiment: string
-  impact: string
-}
-
-interface NewsSentimentResult {
-  overallSentiment: string
-  sentimentScore: number
-  articleCount: number
-  articles: NewsArticle[]
-  keyEvents: string[]
-  sentimentTrend: string
-}
-
-interface StockAnalysisResult {
-  verdict: string
-  confidence: number
-  risk: string
-  technicalSummary: string
-  fundamentalSummary: string
-  sentimentSummary: string
-  explanation: string
-}
-
-// Agent IDs
-const AGENT_IDS = {
-  coordinator: '6985a0d88ce1fc653cfdee14',
-  technical: '6985a0a3094c8b2d4207dd88',
-  fundamental: '6985a0b2301c62c7ca2c7d76',
-  sentiment: '6985a0c3e17e33c11eed1b22'
-}
-
-// ============================================================================
-// Stock Data Type
+// Types and Data
 // ============================================================================
 
 interface StockData {
@@ -97,9 +38,9 @@ interface StockData {
   price: number
   change: number
   changePercent: number
+  logo?: string
 }
 
-// Mock stock data for autocomplete
 const POPULAR_STOCKS: StockData[] = [
   { ticker: 'AAPL', name: 'Apple Inc.', price: 187.42, change: 2.31, changePercent: 1.25 },
   { ticker: 'MSFT', name: 'Microsoft Corporation', price: 378.91, change: -1.45, changePercent: -0.38 },
@@ -107,23 +48,22 @@ const POPULAR_STOCKS: StockData[] = [
   { ticker: 'AMZN', name: 'Amazon.com Inc.', price: 178.35, change: 4.67, changePercent: 2.69 },
   { ticker: 'TSLA', name: 'Tesla Inc.', price: 242.84, change: -5.12, changePercent: -2.07 },
   { ticker: 'NVDA', name: 'NVIDIA Corporation', price: 875.28, change: 12.45, changePercent: 1.44 },
-  { ticker: 'META', name: 'Meta Platforms Inc.', price: 484.03, change: 7.89, changePercent: 1.66 },
+  { ticker: 'META', name: 'Meta Platforms Inc.', price: 484.03, change: 7.89, changePercent: 1.66 }
 ]
 
 // ============================================================================
-// Animated Graph Component
+// Animated Market Graph Component
 // ============================================================================
 
-function AnimatedGraph() {
+function AnimatedMarketGraph() {
   const [points, setPoints] = useState<number[]>([])
 
   useEffect(() => {
-    // Generate initial points
     const generatePoints = () => {
       const newPoints = []
       let value = 50
-      for (let i = 0; i < 50; i++) {
-        value += (Math.random() - 0.5) * 10
+      for (let i = 0; i < 60; i++) {
+        value += (Math.random() - 0.45) * 8
         value = Math.max(20, Math.min(80, value))
         newPoints.push(value)
       }
@@ -132,17 +72,16 @@ function AnimatedGraph() {
 
     setPoints(generatePoints())
 
-    // Animate by shifting points
     const interval = setInterval(() => {
       setPoints(prev => {
         const newPoints = [...prev.slice(1)]
         let lastValue = prev[prev.length - 1]
-        lastValue += (Math.random() - 0.5) * 10
+        lastValue += (Math.random() - 0.45) * 8
         lastValue = Math.max(20, Math.min(80, lastValue))
         newPoints.push(lastValue)
         return newPoints
       })
-    }, 100)
+    }, 80)
 
     return () => clearInterval(interval)
   }, [])
@@ -153,55 +92,38 @@ function AnimatedGraph() {
   }).join(' ')
 
   return (
-    <div className="w-full h-64 relative overflow-hidden rounded-lg bg-gradient-to-br from-[#0D1117]/50 to-[#0D1117]/80 border border-[#3B82F6]/20">
+    <div className="w-full h-80 relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#0D1117] to-[#1a1f2e] border border-[#3B82F6]/20 shadow-2xl">
+      <div className="absolute top-4 left-4 z-10">
+        <div className="flex items-center gap-2">
+          <Activity className="h-5 w-5 text-[#3B82F6]" />
+          <span className="text-sm font-medium text-white">Live Market Simulation</span>
+        </div>
+      </div>
+
       <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
         <defs>
-          <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.3" />
+          <linearGradient id="graphGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.4" />
             <stop offset="100%" stopColor="#3B82F6" stopOpacity="0.0" />
           </linearGradient>
         </defs>
         <path
           d={`${pathData} L 100 100 L 0 100 Z`}
-          fill="url(#gradient)"
+          fill="url(#graphGradient)"
         />
         <path
           d={pathData}
           fill="none"
           stroke="#3B82F6"
-          strokeWidth="0.5"
+          strokeWidth="0.6"
           vectorEffect="non-scaling-stroke"
         />
       </svg>
+
+      <div className="absolute bottom-4 right-4 text-xs text-[#64748B]">
+        Real-time data visualization
+      </div>
     </div>
-  )
-}
-
-// ============================================================================
-// Feature Card Component
-// ============================================================================
-
-interface FeatureCardProps {
-  icon: React.ReactNode
-  title: string
-  description: string
-}
-
-function FeatureCard({ icon, title, description }: FeatureCardProps) {
-  return (
-    <Card className="bg-[#0D1117]/60 border-[#64748B]/20 backdrop-blur-sm hover:border-[#3B82F6]/40 transition-all duration-300">
-      <CardHeader>
-        <div className="flex items-center gap-3">
-          <div className="p-3 rounded-lg bg-[#3B82F6]/10 text-[#3B82F6]">
-            {icon}
-          </div>
-          <CardTitle className="text-xl text-white">{title}</CardTitle>
-        </div>
-      </CardHeader>
-      <CardContent>
-        <p className="text-[#64748B] leading-relaxed">{description}</p>
-      </CardContent>
-    </Card>
   )
 }
 
@@ -210,10 +132,12 @@ function FeatureCard({ icon, title, description }: FeatureCardProps) {
 // ============================================================================
 
 interface StockSearchProps {
-  onSelectStock: (ticker: string) => void
+  onSearch: (ticker: string) => void
+  placeholder?: string
+  className?: string
 }
 
-function StockSearch({ onSelectStock }: StockSearchProps) {
+function StockSearch({ onSearch, placeholder, className = '' }: StockSearchProps) {
   const [query, setQuery] = useState('')
   const [showSuggestions, setShowSuggestions] = useState(false)
   const [filteredStocks, setFilteredStocks] = useState<StockData[]>([])
@@ -235,25 +159,35 @@ function StockSearch({ onSelectStock }: StockSearchProps) {
   const handleSelect = (ticker: string) => {
     setQuery(ticker)
     setShowSuggestions(false)
-    onSelectStock(ticker)
+    onSearch(ticker)
+  }
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (query.trim()) {
+      setShowSuggestions(false)
+      onSearch(query.toUpperCase())
+    }
   }
 
   return (
-    <div className="relative w-full max-w-2xl">
-      <div className="relative">
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-[#64748B]" />
-        <Input
-          type="text"
-          placeholder="Search stocks (e.g., AAPL, MSFT, TSLA)..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          onFocus={() => query && setShowSuggestions(true)}
-          className="pl-12 pr-4 py-6 text-lg bg-[#0D1117]/80 border-[#64748B]/30 text-white placeholder:text-[#64748B] focus:border-[#3B82F6] focus:ring-[#3B82F6]/20"
-        />
-      </div>
+    <div className={`relative ${className}`}>
+      <form onSubmit={handleSubmit}>
+        <div className="relative">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-[#64748B]" />
+          <Input
+            type="text"
+            placeholder={placeholder || "Search stocks (e.g., AAPL, MSFT, TSLA)..."}
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            onFocus={() => query && setShowSuggestions(true)}
+            className="pl-12 pr-4 py-6 text-lg bg-[#0D1117]/80 border-[#64748B]/30 text-white placeholder:text-[#64748B] focus:border-[#3B82F6] focus:ring-[#3B82F6]/20"
+          />
+        </div>
+      </form>
 
       {showSuggestions && filteredStocks.length > 0 && (
-        <div className="absolute top-full mt-2 w-full bg-[#0D1117] border border-[#64748B]/30 rounded-lg shadow-2xl overflow-hidden z-50">
+        <div className="absolute top-full mt-2 w-full bg-[#0D1117] border border-[#64748B]/30 rounded-lg shadow-2xl overflow-hidden z-50 max-h-96 overflow-y-auto">
           {filteredStocks.map((stock) => (
             <button
               key={stock.ticker}
@@ -266,7 +200,7 @@ function StockSearch({ onSelectStock }: StockSearchProps) {
               </div>
               <div className="flex items-center gap-3">
                 <span className="text-white font-medium">${stock.price.toFixed(2)}</span>
-                <span className={`text-sm ${stock.change >= 0 ? 'text-[#F59E0B]' : 'text-[#EF4444]'}`}>
+                <span className={`text-sm font-medium ${stock.change >= 0 ? 'text-[#10B981]' : 'text-[#EF4444]'}`}>
                   {stock.change >= 0 ? '+' : ''}{stock.changePercent.toFixed(2)}%
                 </span>
               </div>
@@ -279,685 +213,450 @@ function StockSearch({ onSelectStock }: StockSearchProps) {
 }
 
 // ============================================================================
-// Golden Card Component (Verdict Display)
+// Real Companies Showcase
 // ============================================================================
 
-interface GoldenCardProps {
-  result: StockAnalysisResult
-  stockData: StockData
-}
-
-function GoldenCard({ result, stockData }: GoldenCardProps) {
-  const getVerdictColor = (verdict: string) => {
-    const v = verdict.toLowerCase()
-    if (v.includes('bullish')) return 'text-[#F59E0B]'
-    if (v.includes('bearish')) return 'text-[#EF4444]'
-    return 'text-[#64748B]'
-  }
-
-  const getVerdictBg = (verdict: string) => {
-    const v = verdict.toLowerCase()
-    if (v.includes('bullish')) return 'bg-[#F59E0B]/10 border-[#F59E0B]/30'
-    if (v.includes('bearish')) return 'bg-[#EF4444]/10 border-[#EF4444]/30'
-    return 'bg-[#64748B]/10 border-[#64748B]/30'
-  }
-
-  const getRiskColor = (risk: string) => {
-    const r = risk.toLowerCase()
-    if (r.includes('low')) return 'text-[#10B981]'
-    if (r.includes('high')) return 'text-[#EF4444]'
-    return 'text-[#F59E0B]'
-  }
-
+function RealCompaniesShowcase() {
   return (
-    <Card className={`${getVerdictBg(result.verdict)} backdrop-blur-sm border-2 animate-in fade-in slide-in-from-bottom-4 duration-500`}>
-      <CardContent className="p-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Left: Stock Info */}
-          <div className="space-y-4">
-            <div>
-              <div className="flex items-baseline gap-3 mb-2">
-                <h2 className="text-4xl font-bold text-white">{stockData.ticker}</h2>
-                <span className="text-lg text-[#64748B]">{stockData.name}</span>
-              </div>
-              <div className="flex items-baseline gap-3">
-                <span className="text-3xl font-semibold text-white">${stockData.price.toFixed(2)}</span>
-                <span className={`text-lg ${stockData.change >= 0 ? 'text-[#F59E0B]' : 'text-[#EF4444]'}`}>
-                  {stockData.change >= 0 ? '+' : ''}{stockData.change.toFixed(2)} ({stockData.changePercent >= 0 ? '+' : ''}{stockData.changePercent.toFixed(2)}%)
-                </span>
-              </div>
-            </div>
-
-            {/* Verdict Badge */}
-            <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${getVerdictBg(result.verdict)} border`}>
-              <span className={`text-2xl font-bold ${getVerdictColor(result.verdict)}`}>
-                {result.verdict}
-              </span>
-            </div>
-          </div>
-
-          {/* Right: Metrics */}
-          <div className="space-y-4">
-            {/* Confidence */}
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-sm text-[#64748B] uppercase tracking-wide">Confidence</span>
-                <span className="text-2xl font-bold text-white">{result.confidence}%</span>
-              </div>
-              <div className="w-full h-3 bg-[#0D1117]/50 rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-gradient-to-r from-[#3B82F6] to-[#F59E0B] transition-all duration-1000 ease-out"
-                  style={{ width: `${result.confidence}%` }}
-                />
-              </div>
-            </div>
-
-            {/* Risk Level */}
-            <div>
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-[#64748B] uppercase tracking-wide">Risk Level</span>
-                <span className={`text-xl font-semibold ${getRiskColor(result.risk)}`}>
-                  {result.risk}
-                </span>
-              </div>
-            </div>
-
-            {/* Summary */}
-            <div className="pt-2">
-              <p className="text-sm text-[#64748B] leading-relaxed">
-                {result.explanation}
-              </p>
-            </div>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
-  )
-}
-
-// ============================================================================
-// Analysis Panel Component
-// ============================================================================
-
-interface AnalysisPanelProps {
-  title: string
-  icon: React.ReactNode
-  children: React.ReactNode
-}
-
-function AnalysisPanel({ title, icon, children }: AnalysisPanelProps) {
-  const [isExpanded, setIsExpanded] = useState(true)
-
-  return (
-    <Card className="bg-[#0D1117]/60 border-[#64748B]/20 backdrop-blur-sm">
-      <CardHeader
-        className="cursor-pointer hover:bg-[#3B82F6]/5 transition-colors"
-        onClick={() => setIsExpanded(!isExpanded)}
-      >
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="p-2 rounded-lg bg-[#3B82F6]/10 text-[#3B82F6]">
-              {icon}
-            </div>
-            <CardTitle className="text-xl text-white">{title}</CardTitle>
-          </div>
-          <ChevronDown
-            className={`h-5 w-5 text-[#64748B] transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}
-          />
-        </div>
-      </CardHeader>
-      {isExpanded && (
-        <CardContent className="animate-in slide-in-from-top-2 duration-300">
-          {children}
-        </CardContent>
-      )}
-    </Card>
-  )
-}
-
-// ============================================================================
-// Technical Analysis Display
-// ============================================================================
-
-interface TechnicalAnalysisDisplayProps {
-  data: TechnicalAnalysisResult
-  summary: string
-}
-
-function TechnicalAnalysisDisplay({ data, summary }: TechnicalAnalysisDisplayProps) {
-  return (
-    <div className="space-y-4">
-      <p className="text-[#64748B] leading-relaxed">{summary}</p>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {/* RSI */}
-        <div className="p-4 bg-[#0D1117]/50 rounded-lg border border-[#64748B]/10">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-[#64748B]">RSI</span>
-            <span className="text-lg font-semibold text-white">{data.rsi.toFixed(1)}</span>
-          </div>
-          <div className="text-xs text-[#3B82F6]">{data.rsiSignal}</div>
-        </div>
-
-        {/* MACD */}
-        <div className="p-4 bg-[#0D1117]/50 rounded-lg border border-[#64748B]/10">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-[#64748B]">MACD</span>
-            <span className="text-lg font-semibold text-white">{data.macd}</span>
-          </div>
-          <div className="text-xs text-[#3B82F6]">Crossover on {data.macdDate}</div>
-        </div>
-
-        {/* MA50 */}
-        <div className="p-4 bg-[#0D1117]/50 rounded-lg border border-[#64748B]/10">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-[#64748B]">50-Day MA</span>
-            <span className="text-lg font-semibold text-white">${data.ma50.toFixed(2)}</span>
-          </div>
-          <div className="text-xs text-[#3B82F6]">Price {data.priceVsMa} MA</div>
-        </div>
-
-        {/* MA200 */}
-        <div className="p-4 bg-[#0D1117]/50 rounded-lg border border-[#64748B]/10">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-[#64748B]">200-Day MA</span>
-            <span className="text-lg font-semibold text-white">${data.ma200.toFixed(2)}</span>
-          </div>
-          <div className="text-xs text-[#3B82F6]">Volume {data.volumeTrend}</div>
-        </div>
+    <section className="container mx-auto px-4 py-12">
+      <div className="text-center mb-8">
+        <Badge className="mb-4 bg-[#3B82F6]/10 text-[#3B82F6] border-[#3B82F6]/30 text-sm px-4 py-1">
+          Real Market Data
+        </Badge>
+        <h3 className="text-3xl font-bold text-white mb-2">
+          Analyze Real-World Companies
+        </h3>
+        <p className="text-[#64748B] text-lg">
+          Live data from the world's most traded stocks
+        </p>
       </div>
 
-      <div className="p-4 bg-[#3B82F6]/10 rounded-lg border border-[#3B82F6]/20">
-        <div className="flex items-center gap-2">
-          <Activity className="h-4 w-4 text-[#3B82F6]" />
-          <span className="text-sm font-medium text-white">Overall Signal: {data.overallSignal}</span>
-        </div>
-      </div>
-    </div>
-  )
-}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {POPULAR_STOCKS.map((stock) => (
+          <Link key={stock.ticker} href={`/stock/${stock.ticker}`}>
+            <Card className="bg-[#0D1117]/60 border-[#64748B]/20 hover:border-[#3B82F6]/50 transition-all duration-300 cursor-pointer group">
+              <CardContent className="p-6">
+                <div className="flex items-start justify-between mb-3">
+                  <div>
+                    <h4 className="text-2xl font-bold text-white group-hover:text-[#3B82F6] transition-colors">
+                      {stock.ticker}
+                    </h4>
+                    <p className="text-xs text-[#64748B] mt-1 line-clamp-1">{stock.name}</p>
+                  </div>
+                  {stock.change >= 0 ? (
+                    <TrendingUp className="h-5 w-5 text-[#10B981]" />
+                  ) : (
+                    <TrendingDown className="h-5 w-5 text-[#EF4444]" />
+                  )}
+                </div>
 
-// ============================================================================
-// Fundamental Analysis Display
-// ============================================================================
+                <div className="space-y-2">
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-2xl font-semibold text-white">
+                      ${stock.price.toFixed(2)}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className={`text-sm font-medium ${stock.change >= 0 ? 'text-[#10B981]' : 'text-[#EF4444]'}`}>
+                      {stock.change >= 0 ? '+' : ''}{stock.change.toFixed(2)}
+                    </span>
+                    <span className={`text-sm font-medium ${stock.change >= 0 ? 'text-[#10B981]' : 'text-[#EF4444]'}`}>
+                      ({stock.change >= 0 ? '+' : ''}{stock.changePercent.toFixed(2)}%)
+                    </span>
+                  </div>
+                </div>
 
-interface FundamentalAnalysisDisplayProps {
-  data: FundamentalAnalysisResult
-  summary: string
-}
-
-function FundamentalAnalysisDisplay({ data, summary }: FundamentalAnalysisDisplayProps) {
-  return (
-    <div className="space-y-4">
-      <p className="text-[#64748B] leading-relaxed">{summary}</p>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {/* P/E Ratio */}
-        <div className="p-4 bg-[#0D1117]/50 rounded-lg border border-[#64748B]/10">
-          <div className="text-sm text-[#64748B] mb-1">P/E Ratio</div>
-          <div className="text-2xl font-semibold text-white">{data.peRatio.toFixed(1)}</div>
-          <div className="text-xs text-[#3B82F6] mt-1">Sector Avg: {data.sectorAvgPE.toFixed(1)}</div>
-        </div>
-
-        {/* Debt to Equity */}
-        <div className="p-4 bg-[#0D1117]/50 rounded-lg border border-[#64748B]/10">
-          <div className="text-sm text-[#64748B] mb-1">Debt/Equity</div>
-          <div className="text-2xl font-semibold text-white">{data.debtToEquity.toFixed(2)}</div>
-          <div className="text-xs text-[#3B82F6] mt-1">Leverage ratio</div>
-        </div>
-
-        {/* Health Score */}
-        <div className="p-4 bg-[#0D1117]/50 rounded-lg border border-[#64748B]/10">
-          <div className="text-sm text-[#64748B] mb-1">Health Score</div>
-          <div className="text-2xl font-semibold text-white">{data.healthScore}/100</div>
-          <div className="text-xs text-[#3B82F6] mt-1">{data.fundamentalSignal}</div>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {/* Earnings Growth */}
-        <div className="p-4 bg-[#0D1117]/50 rounded-lg border border-[#64748B]/10">
-          <div className="text-sm text-[#64748B] mb-1">Earnings Growth (YoY)</div>
-          <div className="text-xl font-semibold text-[#F59E0B]">+{data.earningsGrowthYoY.toFixed(1)}%</div>
-        </div>
-
-        {/* Revenue Growth */}
-        <div className="p-4 bg-[#0D1117]/50 rounded-lg border border-[#64748B]/10">
-          <div className="text-sm text-[#64748B] mb-1">Revenue Growth (YoY)</div>
-          <div className="text-xl font-semibold text-[#F59E0B]">+{data.revenueGrowthYoY.toFixed(1)}%</div>
-        </div>
-      </div>
-
-      {/* Strengths */}
-      {data.strengths.length > 0 && (
-        <div className="p-4 bg-[#10B981]/10 rounded-lg border border-[#10B981]/20">
-          <div className="flex items-center gap-2 mb-2">
-            <CheckCircle2 className="h-4 w-4 text-[#10B981]" />
-            <span className="text-sm font-medium text-white">Strengths</span>
-          </div>
-          <ul className="space-y-1">
-            {data.strengths.map((strength, i) => (
-              <li key={i} className="text-sm text-[#64748B] ml-6">• {strength}</li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-      {/* Concerns */}
-      {data.concerns.length > 0 && (
-        <div className="p-4 bg-[#EF4444]/10 rounded-lg border border-[#EF4444]/20">
-          <div className="flex items-center gap-2 mb-2">
-            <AlertCircle className="h-4 w-4 text-[#EF4444]" />
-            <span className="text-sm font-medium text-white">Concerns</span>
-          </div>
-          <ul className="space-y-1">
-            {data.concerns.map((concern, i) => (
-              <li key={i} className="text-sm text-[#64748B] ml-6">• {concern}</li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </div>
-  )
-}
-
-// ============================================================================
-// News Sentiment Display
-// ============================================================================
-
-interface NewsSentimentDisplayProps {
-  data: NewsSentimentResult
-  summary: string
-}
-
-function NewsSentimentDisplay({ data, summary }: NewsSentimentDisplayProps) {
-  const getSentimentColor = (sentiment: string) => {
-    const s = sentiment.toLowerCase()
-    if (s.includes('positive')) return 'bg-[#10B981]/10 border-[#10B981]/30 text-[#10B981]'
-    if (s.includes('negative')) return 'bg-[#EF4444]/10 border-[#EF4444]/30 text-[#EF4444]'
-    return 'bg-[#64748B]/10 border-[#64748B]/30 text-[#64748B]'
-  }
-
-  const getImpactColor = (impact: string) => {
-    const i = impact.toLowerCase()
-    if (i.includes('high')) return 'text-[#EF4444]'
-    if (i.includes('low')) return 'text-[#64748B]'
-    return 'text-[#F59E0B]'
-  }
-
-  return (
-    <div className="space-y-4">
-      <p className="text-[#64748B] leading-relaxed">{summary}</p>
-
-      {/* Sentiment Score */}
-      <div className="p-4 bg-[#0D1117]/50 rounded-lg border border-[#64748B]/10">
-        <div className="flex items-center justify-between mb-2">
-          <span className="text-sm text-[#64748B]">Overall Sentiment Score</span>
-          <span className="text-2xl font-bold text-white">{data.sentimentScore}/100</span>
-        </div>
-        <div className="w-full h-3 bg-[#0D1117]/50 rounded-full overflow-hidden">
-          <div
-            className="h-full bg-gradient-to-r from-[#EF4444] via-[#64748B] to-[#10B981] transition-all duration-1000"
-            style={{ width: `${data.sentimentScore}%` }}
-          />
-        </div>
-        <div className="flex items-center justify-between mt-2 text-xs">
-          <span className="text-[#EF4444]">Negative</span>
-          <span className="text-[#64748B]">Neutral</span>
-          <span className="text-[#10B981]">Positive</span>
-        </div>
-      </div>
-
-      {/* Key Events */}
-      {data.keyEvents.length > 0 && (
-        <div className="p-4 bg-[#3B82F6]/10 rounded-lg border border-[#3B82F6]/20">
-          <div className="flex items-center gap-2 mb-2">
-            <Newspaper className="h-4 w-4 text-[#3B82F6]" />
-            <span className="text-sm font-medium text-white">Key Events</span>
-          </div>
-          <ul className="space-y-1">
-            {data.keyEvents.map((event, i) => (
-              <li key={i} className="text-sm text-[#64748B] ml-6">• {event}</li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-      {/* Articles */}
-      <div className="space-y-3">
-        <div className="flex items-center justify-between">
-          <span className="text-sm font-medium text-white">Recent Articles ({data.articleCount})</span>
-          <span className="text-sm text-[#64748B]">Trend: {data.sentimentTrend}</span>
-        </div>
-        {data.articles.map((article, i) => (
-          <div key={i} className="p-4 bg-[#0D1117]/50 rounded-lg border border-[#64748B]/10 hover:border-[#3B82F6]/30 transition-colors">
-            <div className="flex items-start justify-between gap-3 mb-2">
-              <h4 className="text-white font-medium flex-1">{article.title}</h4>
-              <span className={`px-2 py-1 rounded-full text-xs font-medium border ${getSentimentColor(article.sentiment)}`}>
-                {article.sentiment}
-              </span>
-            </div>
-            <div className="flex items-center justify-between text-sm">
-              <div className="flex items-center gap-3 text-[#64748B]">
-                <span>{article.source}</span>
-                <span>•</span>
-                <span>{article.date}</span>
-              </div>
-              <span className={`text-xs font-medium ${getImpactColor(article.impact)}`}>
-                {article.impact} impact
-              </span>
-            </div>
-          </div>
+                <div className="mt-4 pt-4 border-t border-[#64748B]/10">
+                  <div className="flex items-center justify-between text-sm text-[#64748B] group-hover:text-[#3B82F6] transition-colors">
+                    <span>View Analysis</span>
+                    <ChevronRight className="h-4 w-4" />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
         ))}
       </div>
-    </div>
+    </section>
   )
 }
 
 // ============================================================================
-// Main Page Component
+// Feature Card Component
+// ============================================================================
+
+interface FeatureCardProps {
+  icon: React.ReactNode
+  title: string
+  description: string
+  highlight?: boolean
+}
+
+function FeatureCard({ icon, title, description, highlight = false }: FeatureCardProps) {
+  return (
+    <Card className={`${highlight ? 'bg-[#3B82F6]/10 border-[#3B82F6]/40' : 'bg-[#0D1117]/60 border-[#64748B]/20'} backdrop-blur-sm hover:border-[#3B82F6]/50 transition-all duration-300`}>
+      <CardHeader>
+        <div className="flex items-start gap-4">
+          <div className="p-3 rounded-lg bg-[#3B82F6]/20 text-[#3B82F6]">
+            {icon}
+          </div>
+          <div className="flex-1">
+            <CardTitle className="text-xl text-white mb-2">{title}</CardTitle>
+            <p className="text-[#64748B] leading-relaxed">{description}</p>
+          </div>
+        </div>
+      </CardHeader>
+    </Card>
+  )
+}
+
+// ============================================================================
+// Key Features Section
+// ============================================================================
+
+function KeyFeatures() {
+  return (
+    <section className="container mx-auto px-4 py-16">
+      <div className="text-center mb-12">
+        <h3 className="text-4xl font-bold text-white mb-4">
+          Everything You Need to Invest Smarter
+        </h3>
+        <p className="text-xl text-[#64748B] max-w-3xl mx-auto">
+          Comprehensive AI-powered analysis with explainable insights and educational content
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <FeatureCard
+          icon={<Brain className="h-6 w-6" />}
+          title="AI Chatbot Analyst"
+          description="Ask natural language questions about any stock. Get instant, data-grounded answers with citations, educational tips, and confidence levels."
+          highlight={true}
+        />
+
+        <FeatureCard
+          icon={<Target className="h-6 w-6" />}
+          title="Executive Summary"
+          description="Clear INVEST/HOLD/AVOID verdicts with confidence percentages, risk levels, and time horizons. Know the bottom line in 30 seconds."
+          highlight={true}
+        />
+
+        <FeatureCard
+          icon={<BarChart3 className="h-6 w-6" />}
+          title="Technical Analysis"
+          description="Advanced indicators including RSI, MACD, moving averages, and volume trends. Every signal backed by specific data points and dates."
+        />
+
+        <FeatureCard
+          icon={<TrendingUp className="h-6 w-6" />}
+          title="Fundamental Insights"
+          description="Deep dive into P/E ratios, debt levels, earnings growth, and sector comparisons. Understand exactly why a stock is valued the way it is."
+        />
+
+        <FeatureCard
+          icon={<Newspaper className="h-6 w-6" />}
+          title="News Sentiment Analysis"
+          description="Real-time sentiment from trusted sources. See which articles are moving the market and their potential impact with sentiment scores."
+        />
+
+        <FeatureCard
+          icon={<Activity className="h-6 w-6" />}
+          title="Sector Trends Analysis"
+          description="Understand how stocks perform relative to their sector. Compare to peers, identify industry trends, and spot rotation signals."
+        />
+
+        <FeatureCard
+          icon={<BookOpen className="h-6 w-6" />}
+          title="Learning Hub"
+          description="Structured educational content for students and professionals. From basics to advanced strategies, with interactive examples using real stocks."
+          highlight={true}
+        />
+
+        <FeatureCard
+          icon={<Shield className="h-6 w-6" />}
+          title="Scenario Analysis"
+          description="Future outlook with optimistic, neutral, and pessimistic scenarios. Clear disclaimers and conditional triggers for responsible investing."
+          highlight={true}
+        />
+      </div>
+    </section>
+  )
+}
+
+// ============================================================================
+// Why StockAI Section
+// ============================================================================
+
+function WhyStockAI() {
+  return (
+    <section className="container mx-auto px-4 py-16">
+      <div className="max-w-4xl mx-auto">
+        <Card className="bg-gradient-to-br from-[#3B82F6]/10 to-[#0D1117]/60 border-[#3B82F6]/30 backdrop-blur-sm">
+          <CardHeader>
+            <div className="flex items-center gap-3 mb-4">
+              <Zap className="h-8 w-8 text-[#3B82F6]" />
+              <CardTitle className="text-3xl text-white">
+                Why StockAI?
+              </CardTitle>
+            </div>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <Star className="h-5 w-5 text-[#F59E0B]" />
+                  <h4 className="text-lg font-semibold text-white">For Students</h4>
+                </div>
+                <p className="text-[#64748B]">
+                  Learn investing fundamentals with interactive lessons tied to real market examples. Build confidence before risking real money.
+                </p>
+              </div>
+
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <Star className="h-5 w-5 text-[#F59E0B]" />
+                  <h4 className="text-lg font-semibold text-white">For Professionals</h4>
+                </div>
+                <p className="text-[#64748B]">
+                  Get institutional-grade analysis without expensive Bloomberg terminals. Make data-driven decisions backed by multi-agent AI.
+                </p>
+              </div>
+
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <Star className="h-5 w-5 text-[#F59E0B]" />
+                  <h4 className="text-lg font-semibold text-white">For Retail Investors</h4>
+                </div>
+                <p className="text-[#64748B]">
+                  Level the playing field with AI that explains every recommendation. No black boxes, just transparent, grounded insights.
+                </p>
+              </div>
+            </div>
+
+            <div className="pt-6 border-t border-[#64748B]/20">
+              <h4 className="text-lg font-semibold text-white mb-3">Data-Grounded AI You Can Trust</h4>
+              <ul className="space-y-2 text-[#64748B]">
+                <li className="flex items-start gap-2">
+                  <span className="text-[#10B981] mt-1">✓</span>
+                  <span>Every verdict comes with specific citations: "RSI at 66.7 (neutral)", "MACD bullish crossover on Oct 12"</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-[#10B981] mt-1">✓</span>
+                  <span>Multi-agent system: Separate AI specialists for technical, fundamental, sentiment, and sector analysis</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-[#10B981] mt-1">✓</span>
+                  <span>Transparent confidence levels and risk ratings on all recommendations</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-[#10B981] mt-1">✓</span>
+                  <span>Educational chatbot that explains concepts while answering your questions</span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="pt-4">
+              <p className="text-white font-medium text-lg text-center">
+                Make informed decisions backed by data, not guesswork.
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </section>
+  )
+}
+
+// ============================================================================
+// Main Homepage Component
 // ============================================================================
 
 export default function Home() {
-  const [selectedStock, setSelectedStock] = useState<string | null>(null)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const [analysisResult, setAnalysisResult] = useState<StockAnalysisResult | null>(null)
-  const [technicalData, setTechnicalData] = useState<TechnicalAnalysisResult | null>(null)
-  const [fundamentalData, setFundamentalData] = useState<FundamentalAnalysisResult | null>(null)
-  const [sentimentData, setSentimentData] = useState<NewsSentimentResult | null>(null)
-
-  // Get stock data
-  const getStockData = (ticker: string): StockData => {
-    const stock = POPULAR_STOCKS.find(s => s.ticker === ticker)
-    return stock || {
-      ticker,
-      name: `${ticker} Inc.`,
-      price: 150.00,
-      change: 2.50,
-      changePercent: 1.69
-    }
+  const handleSearch = (ticker: string) => {
+    window.location.href = `/stock/${ticker}`
   }
-
-  const analyzeStock = async (ticker: string) => {
-    setLoading(true)
-    setError(null)
-    setAnalysisResult(null)
-    setTechnicalData(null)
-    setFundamentalData(null)
-    setSentimentData(null)
-
-    try {
-      const stockData = getStockData(ticker)
-
-      // Call coordinator agent for overall analysis
-      const coordinatorResult = await callAIAgent(
-        `Analyze ${ticker} stock. Current price: $${stockData.price.toFixed(2)}`,
-        AGENT_IDS.coordinator
-      )
-
-      if (!coordinatorResult.success) {
-        throw new Error(coordinatorResult.error || 'Failed to get analysis')
-      }
-
-      // Parse coordinator response
-      if (coordinatorResult.response?.status === 'success' && coordinatorResult.response?.result) {
-        setAnalysisResult(coordinatorResult.response.result as StockAnalysisResult)
-      }
-
-      // Call individual agents for detailed data
-      const [technicalResult, fundamentalResult, sentimentResult] = await Promise.all([
-        callAIAgent(`Provide technical analysis for ${ticker}`, AGENT_IDS.technical),
-        callAIAgent(`Provide fundamental analysis for ${ticker}`, AGENT_IDS.fundamental),
-        callAIAgent(`Provide news sentiment analysis for ${ticker}`, AGENT_IDS.sentiment)
-      ])
-
-      // Parse technical analysis
-      if (technicalResult.success && technicalResult.response?.result) {
-        setTechnicalData(technicalResult.response.result as TechnicalAnalysisResult)
-      }
-
-      // Parse fundamental analysis
-      if (fundamentalResult.success && fundamentalResult.response?.result) {
-        setFundamentalData(fundamentalResult.response.result as FundamentalAnalysisResult)
-      }
-
-      // Parse sentiment analysis
-      if (sentimentResult.success && sentimentResult.response?.result) {
-        setSentimentData(sentimentResult.response.result as NewsSentimentResult)
-      }
-
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred')
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  const handleSelectStock = (ticker: string) => {
-    setSelectedStock(ticker)
-    analyzeStock(ticker)
-  }
-
-  const handleReset = () => {
-    setSelectedStock(null)
-    setAnalysisResult(null)
-    setTechnicalData(null)
-    setFundamentalData(null)
-    setSentimentData(null)
-    setError(null)
-  }
-
-  // Landing Page View
-  if (!selectedStock) {
-    return (
-      <div className="min-h-screen bg-[#0D1117]">
-        {/* Header */}
-        <header className="sticky top-0 z-50 bg-[#0D1117]/80 backdrop-blur-lg border-b border-[#64748B]/20">
-          <div className="container mx-auto px-4 py-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <TrendingUp className="h-8 w-8 text-[#3B82F6]" />
-                <h1 className="text-2xl font-bold text-white">StockAI</h1>
-              </div>
-              <div className="flex-1 max-w-2xl mx-8">
-                <StockSearch onSelectStock={handleSelectStock} />
-              </div>
-            </div>
-          </div>
-        </header>
-
-        {/* Hero Section */}
-        <section className="container mx-auto px-4 py-16">
-          <div className="max-w-4xl mx-auto text-center space-y-8">
-            <h2 className="text-5xl md:text-6xl font-bold text-white leading-tight">
-              Understand Stocks with AI.
-              <br />
-              <span className="text-[#3B82F6]">Don't Guess.</span>
-            </h2>
-            <p className="text-xl text-[#64748B] max-w-2xl mx-auto">
-              Institutional-grade stock analysis powered by AI. Get data-grounded insights
-              from technical indicators, fundamental metrics, and real-time news sentiment.
-            </p>
-            <div className="flex justify-center">
-              <StockSearch onSelectStock={handleSelectStock} />
-            </div>
-          </div>
-        </section>
-
-        {/* Animated Graph */}
-        <section className="container mx-auto px-4 py-8">
-          <AnimatedGraph />
-        </section>
-
-        {/* Feature Cards */}
-        <section className="container mx-auto px-4 py-16">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <FeatureCard
-              icon={<BarChart3 className="h-6 w-6" />}
-              title="Technical Analysis"
-              description="Advanced charting with RSI, MACD, moving averages, and volume analysis. Every signal is backed by specific data points and dates."
-            />
-            <FeatureCard
-              icon={<TrendingUp className="h-6 w-6" />}
-              title="Fundamental Insights"
-              description="Deep dive into P/E ratios, debt levels, earnings growth, and sector comparisons. Know exactly why a stock is valued the way it is."
-            />
-            <FeatureCard
-              icon={<Newspaper className="h-6 w-6" />}
-              title="News Sentiment"
-              description="Real-time sentiment analysis from trusted sources. See which articles are moving the market and their potential impact."
-            />
-          </div>
-        </section>
-
-        {/* Why AI Section */}
-        <section className="container mx-auto px-4 py-16">
-          <div className="max-w-3xl mx-auto">
-            <Card className="bg-[#0D1117]/60 border-[#3B82F6]/30 backdrop-blur-sm">
-              <CardHeader>
-                <CardTitle className="text-2xl text-white text-center">
-                  Why Data-Grounded AI?
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4 text-[#64748B] leading-relaxed">
-                <p>
-                  Traditional stock analysis tools show you raw data. StockAI goes further by
-                  synthesizing technical indicators, fundamental metrics, and news sentiment into
-                  clear, actionable insights.
-                </p>
-                <p>
-                  Every verdict comes with specific citations: "RSI at 66.7 (neutral)",
-                  "MACD bullish crossover on Oct 12", "P/E 28.5 vs sector avg 24.0".
-                  You'll never wonder where a recommendation came from.
-                </p>
-                <p className="text-white font-medium">
-                  Make informed decisions backed by data, not guesswork.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-        </section>
-      </div>
-    )
-  }
-
-  // Stock Analysis View
-  const stockData = getStockData(selectedStock)
 
   return (
     <div className="min-h-screen bg-[#0D1117]">
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-[#0D1117]/80 backdrop-blur-lg border-b border-[#64748B]/20">
+      <header className="sticky top-0 z-50 bg-[#0D1117]/90 backdrop-blur-lg border-b border-[#64748B]/20">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <button
-              onClick={handleReset}
-              className="flex items-center gap-2 text-[#3B82F6] hover:text-[#3B82F6]/80 transition-colors"
-            >
-              <TrendingUp className="h-8 w-8" />
-              <h1 className="text-2xl font-bold">StockAI</h1>
-            </button>
-            <div className="flex-1 max-w-2xl mx-8">
-              <StockSearch onSelectStock={handleSelectStock} />
+            <Link href="/" className="flex items-center gap-2 group">
+              <TrendingUp className="h-8 w-8 text-[#3B82F6] group-hover:scale-110 transition-transform" />
+              <h1 className="text-2xl font-bold text-white">StockAI</h1>
+            </Link>
+
+            <nav className="hidden md:flex items-center gap-6">
+              <Link
+                href="/learn"
+                className="text-[#64748B] hover:text-[#3B82F6] transition-colors font-medium"
+              >
+                Learning Hub
+              </Link>
+              <Link
+                href="/watchlist"
+                className="text-[#64748B] hover:text-[#3B82F6] transition-colors font-medium"
+              >
+                Watchlist
+              </Link>
+            </nav>
+
+            <div className="flex items-center gap-4">
+              <StockSearch
+                onSearch={handleSearch}
+                placeholder="Quick search..."
+                className="hidden lg:block w-64"
+              />
             </div>
           </div>
         </div>
       </header>
 
-      <div className="container mx-auto px-4 py-8 space-y-8">
-        {/* Loading State */}
-        {loading && (
-          <Card className="bg-[#0D1117]/60 border-[#3B82F6]/30 backdrop-blur-sm">
-            <CardContent className="p-8">
-              <div className="flex items-center justify-center gap-4">
-                <Loader2 className="h-8 w-8 text-[#3B82F6] animate-spin" />
-                <div className="text-center">
-                  <p className="text-lg text-white font-medium">Analyzing {selectedStock}...</p>
-                  <p className="text-sm text-[#64748B]">Gathering technical, fundamental, and sentiment data</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        )}
+      {/* Hero Section */}
+      <section className="container mx-auto px-4 py-20">
+        <div className="max-w-5xl mx-auto text-center space-y-8">
+          <div className="space-y-4">
+            <Badge className="bg-[#3B82F6]/10 text-[#3B82F6] border-[#3B82F6]/30 text-sm px-4 py-1">
+              AI-Powered Financial Intelligence
+            </Badge>
 
-        {/* Error State */}
-        {error && (
-          <Card className="bg-[#EF4444]/10 border-[#EF4444]/30 backdrop-blur-sm">
-            <CardContent className="p-6">
-              <div className="flex items-center gap-3">
-                <XCircle className="h-6 w-6 text-[#EF4444]" />
-                <div>
-                  <p className="text-white font-medium">Analysis Error</p>
-                  <p className="text-sm text-[#64748B]">{error}</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        )}
+            <h2 className="text-5xl md:text-7xl font-bold text-white leading-tight">
+              Understand Stocks
+              <br />
+              with AI.{' '}
+              <span className="text-[#3B82F6]">Don't Guess.</span>
+            </h2>
 
-        {/* Golden Card - Verdict */}
-        {analysisResult && (
-          <GoldenCard result={analysisResult} stockData={stockData} />
-        )}
+            <p className="text-xl md:text-2xl text-[#64748B] max-w-3xl mx-auto">
+              Institutional-grade analysis for <span className="text-white font-medium">students</span>,{' '}
+              <span className="text-white font-medium">working professionals</span>, and{' '}
+              <span className="text-white font-medium">retail investors</span>.
+              <br />
+              Get data-grounded insights in 30 seconds.
+            </p>
+          </div>
 
-        {/* Analysis Panels */}
-        {technicalData && analysisResult && (
-          <AnalysisPanel
-            title="Technical Analysis"
-            icon={<BarChart3 className="h-5 w-5" />}
-          >
-            <TechnicalAnalysisDisplay
-              data={technicalData}
-              summary={analysisResult.technicalSummary}
-            />
-          </AnalysisPanel>
-        )}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link href="/learn">
+              <Button
+                size="lg"
+                className="px-8 py-6 text-lg bg-[#3B82F6] hover:bg-[#3B82F6]/90 text-white group"
+              >
+                <BookOpen className="h-5 w-5 mr-2" />
+                Start Learning
+                <ArrowRight className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </Link>
 
-        {fundamentalData && analysisResult && (
-          <AnalysisPanel
-            title="Fundamental Analysis"
-            icon={<TrendingUp className="h-5 w-5" />}
-          >
-            <FundamentalAnalysisDisplay
-              data={fundamentalData}
-              summary={analysisResult.fundamentalSummary}
-            />
-          </AnalysisPanel>
-        )}
-
-        {sentimentData && analysisResult && (
-          <AnalysisPanel
-            title="News Sentiment Analysis"
-            icon={<Newspaper className="h-5 w-5" />}
-          >
-            <NewsSentimentDisplay
-              data={sentimentData}
-              summary={analysisResult.sentimentSummary}
-            />
-          </AnalysisPanel>
-        )}
-
-        {/* Action Button */}
-        {!loading && (
-          <div className="flex justify-center gap-4">
             <Button
-              onClick={() => analyzeStock(selectedStock)}
-              className="px-8 py-6 text-lg bg-[#3B82F6] hover:bg-[#3B82F6]/90 text-white"
-            >
-              <Activity className="h-5 w-5 mr-2" />
-              Re-analyze Stock
-            </Button>
-            <Button
-              onClick={handleReset}
+              size="lg"
               variant="outline"
               className="px-8 py-6 text-lg border-[#64748B]/30 text-white hover:bg-[#64748B]/10"
+              onClick={() => {
+                const stocksSection = document.getElementById('stocks-section')
+                stocksSection?.scrollIntoView({ behavior: 'smooth' })
+              }}
             >
-              Back to Search
+              <Search className="h-5 w-5 mr-2" />
+              Explore Stocks
             </Button>
           </div>
-        )}
+
+          <div className="pt-8">
+            <StockSearch
+              onSearch={handleSearch}
+              className="max-w-2xl mx-auto"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Animated Market Graph */}
+      <section className="container mx-auto px-4 py-8">
+        <AnimatedMarketGraph />
+      </section>
+
+      {/* Real Companies Showcase */}
+      <div id="stocks-section">
+        <RealCompaniesShowcase />
       </div>
+
+      {/* Key Features */}
+      <KeyFeatures />
+
+      {/* Why StockAI */}
+      <WhyStockAI />
+
+      {/* CTA Section */}
+      <section className="container mx-auto px-4 py-20">
+        <div className="max-w-4xl mx-auto text-center">
+          <Card className="bg-gradient-to-r from-[#3B82F6]/20 to-[#0D1117]/60 border-[#3B82F6]/40 backdrop-blur-sm">
+            <CardContent className="p-12">
+              <h3 className="text-3xl font-bold text-white mb-4">
+                Ready to Make Smarter Investment Decisions?
+              </h3>
+              <p className="text-xl text-[#64748B] mb-8">
+                Join thousands of investors using AI to understand the market
+              </p>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <Link href="/stock/AAPL">
+                  <Button
+                    size="lg"
+                    className="px-8 py-6 text-lg bg-[#3B82F6] hover:bg-[#3B82F6]/90 text-white"
+                  >
+                    Try with Apple Stock
+                    <ArrowRight className="h-5 w-5 ml-2" />
+                  </Button>
+                </Link>
+                <Link href="/learn">
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="px-8 py-6 text-lg border-[#64748B]/30 text-white hover:bg-[#64748B]/10"
+                  >
+                    <BookOpen className="h-5 w-5 mr-2" />
+                    Visit Learning Hub
+                  </Button>
+                </Link>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="border-t border-[#64748B]/20 py-12">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-2">
+              <TrendingUp className="h-6 w-6 text-[#3B82F6]" />
+              <span className="text-white font-semibold">StockAI</span>
+            </div>
+
+            <div className="flex items-center gap-6">
+              <Link href="/learn" className="text-[#64748B] hover:text-[#3B82F6] transition-colors">
+                Learning Hub
+              </Link>
+              <Link href="/watchlist" className="text-[#64748B] hover:text-[#3B82F6] transition-colors">
+                Watchlist
+              </Link>
+            </div>
+
+            <p className="text-[#64748B] text-sm">
+              AI-Powered Financial Intelligence Platform
+            </p>
+          </div>
+
+          <div className="mt-8 pt-8 border-t border-[#64748B]/10 text-center">
+            <p className="text-[#64748B] text-sm">
+              StockAI is for educational and informational purposes only. Not financial advice.
+              <br />
+              Always consult with a qualified financial advisor before making investment decisions.
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   )
 }

@@ -1,0 +1,88 @@
+{
+  "agent_name": "AI Chatbot Analyst",
+  "agent_id": "6985a64ae2c0086a4fc43bf5",
+  "agent_purpose": "conversational_qa",
+  "description": "Answers natural language questions about stocks, indicators, fundamentals, and risks with educational explanations",
+  "response_schema": {
+    "status": "string",
+    "result": {
+      "answer": "string",
+      "dataPoints": [
+        {
+          "metric": "string",
+          "value": "string",
+          "source": "string",
+          "timestamp": "string"
+        }
+      ],
+      "relatedConcepts": [
+        "string"
+      ],
+      "confidenceLevel": "string",
+      "educationalTips": [
+        "string"
+      ]
+    },
+    "metadata": {
+      "agent_name": "string",
+      "timestamp": "string"
+    }
+  },
+  "example_response": {
+    "status": "success",
+    "result": {
+      "answer": "Certainly! Let's explore the concept of the RSI (Relative Strength Index). RSI is a momentum oscillator that measures the speed and change of price movements on a scale of 0 to 100. Generally, an RSI above 70 indicates that a stock may be overbought, while an RSI below 30 suggests it may be oversold. For example, as of September 2023, Tesla's RSI was around 74, suggesting it was potentially overbought at that time (source: Yahoo Finance, September 2023).",
+      "dataPoints": [
+        {
+          "metric": "Tesla RSI",
+          "value": "74",
+          "source": "Yahoo Finance",
+          "timestamp": "2023-09-01"
+        }
+      ],
+      "relatedConcepts": [
+        "Momentum Indicators",
+        "Overbought/Oversold Conditions"
+      ],
+      "confidenceLevel": "high",
+      "educationalTips": [
+        "Use RSI in conjunction with other technical indicators for more robust analysis.",
+        "Remember that markets are volatile, and RSI is just one tool to consider."
+      ]
+    },
+    "metadata": {
+      "agent_name": "AI Chatbot Analyst",
+      "timestamp": "2023-10-05T14:48:00Z"
+    }
+  },
+  "is_actual_tested": true,
+  "test_timestamp": "2026-02-06T08:29:06.833936",
+  "test_message_used": "Hello, provide a sample response",
+  "actual_test_response": {
+    "status": "success",
+    "result": {
+      "answer": "Certainly! Let's explore the concept of the RSI (Relative Strength Index). RSI is a momentum oscillator that measures the speed and change of price movements on a scale of 0 to 100. Generally, an RSI above 70 indicates that a stock may be overbought, while an RSI below 30 suggests it may be oversold. For example, as of September 2023, Tesla's RSI was around 74, suggesting it was potentially overbought at that time (source: Yahoo Finance, September 2023).",
+      "dataPoints": [
+        {
+          "metric": "Tesla RSI",
+          "value": "74",
+          "source": "Yahoo Finance",
+          "timestamp": "2023-09-01"
+        }
+      ],
+      "relatedConcepts": [
+        "Momentum Indicators",
+        "Overbought/Oversold Conditions"
+      ],
+      "confidenceLevel": "high",
+      "educationalTips": [
+        "Use RSI in conjunction with other technical indicators for more robust analysis.",
+        "Remember that markets are volatile, and RSI is just one tool to consider."
+      ]
+    },
+    "metadata": {
+      "agent_name": "AI Chatbot Analyst",
+      "timestamp": "2023-10-05T14:48:00Z"
+    }
+  }
+}
