@@ -5,7 +5,7 @@
  * Complete analysis with Executive Summary, Chatbot, Sector Analysis, Future Outlook
  */
 
-import { useState, useEffect, use } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -699,9 +699,8 @@ function NewsSentimentDisplay({ data, summary }: { data: NewsSentimentResult; su
 // Main Stock Detail Component
 // ============================================================================
 
-export default function StockDetailPage({ params }: { params: Promise<{ ticker: string }> }) {
-  const resolvedParams = use(params)
-  const ticker = resolvedParams.ticker.toUpperCase()
+export default function StockDetailPage({ params }: { params: { ticker: string } }) {
+  const ticker = params.ticker.toUpperCase()
   const stockInfo = STOCK_DATA[ticker] || {
     name: `${ticker} Inc.`,
     price: 150.00,
