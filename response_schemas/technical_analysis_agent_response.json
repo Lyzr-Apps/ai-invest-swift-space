@@ -1,0 +1,63 @@
+{
+  "agent_name": "Technical Analysis Agent",
+  "agent_id": "6985a0a3094c8b2d4207dd88",
+  "agent_purpose": "Analyzes technical indicators (RSI, MACD, moving averages, volume)",
+  "description": "Technical analysis agent that provides RSI, MACD, moving averages, and volume trends",
+  "response_schema": {
+    "status": "string",
+    "result": {
+      "rsi": "number",
+      "rsiSignal": "string",
+      "macd": "string",
+      "macdDate": "string",
+      "ma50": "number",
+      "ma200": "number",
+      "priceVsMa": "string",
+      "volumeTrend": "string",
+      "overallSignal": "string"
+    },
+    "metadata": {
+      "agent_name": "string",
+      "timestamp": "string"
+    }
+  },
+  "example_response": {
+    "status": "success",
+    "result": {
+      "rsi": 65,
+      "rsiSignal": "neutral",
+      "macd": "bullish",
+      "macdDate": "2023-09-25",
+      "ma50": 150.25,
+      "ma200": 145.0,
+      "priceVsMa": "above",
+      "volumeTrend": "increasing",
+      "overallSignal": "positive"
+    },
+    "metadata": {
+      "agent_name": "Technical Analysis Agent",
+      "timestamp": "2023-10-06T14:30:00Z"
+    }
+  },
+  "is_actual_tested": true,
+  "test_timestamp": "2026-02-06T08:07:55.834792",
+  "test_message_used": "Hello, provide a sample response",
+  "actual_test_response": {
+    "status": "success",
+    "result": {
+      "rsi": 65,
+      "rsiSignal": "neutral",
+      "macd": "bullish",
+      "macdDate": "2023-09-25",
+      "ma50": 150.25,
+      "ma200": 145.0,
+      "priceVsMa": "above",
+      "volumeTrend": "increasing",
+      "overallSignal": "positive"
+    },
+    "metadata": {
+      "agent_name": "Technical Analysis Agent",
+      "timestamp": "2023-10-06T14:30:00Z"
+    }
+  }
+}

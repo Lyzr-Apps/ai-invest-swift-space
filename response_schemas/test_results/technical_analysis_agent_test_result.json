@@ -1,0 +1,28 @@
+{
+  "agent_name": "Technical Analysis Agent",
+  "agent_id": "6985a0a3094c8b2d4207dd88",
+  "test_message": "Provide technical analysis for AAPL. Current price: $187.42",
+  "expected_purpose": "Analyzes technical indicators (RSI, MACD, moving averages, volume)",
+  "timestamp": "2026-02-06T08:07:14.044404",
+  "is_valid_json": true,
+  "validation_errors": [],
+  "actual_response": {
+    "status": "success",
+    "result": {
+      "rsi": 66.7,
+      "rsiSignal": "neutral",
+      "macd": "bullish",
+      "macdDate": "2023-10-12",
+      "ma50": 183.9,
+      "ma200": 170.55,
+      "priceVsMa": "above",
+      "volumeTrend": "increasing",
+      "overallSignal": "positive"
+    },
+    "metadata": {
+      "agent_name": "Technical Analysis Agent",
+      "timestamp": "2023-10-13T15:00:00Z"
+    }
+  },
+  "raw_response": "{\n  \"status\": \"success\",\n  \"result\": {\n    \"rsi\": 66.7,\n    \"rsiSignal\": \"neutral\",\n    \"macd\": \"bullish\",\n    \"macdDate\": \"2023-10-12\",\n    \"ma50\": 183.90,\n    \"ma200\": 170.55,\n    \"priceVsMa\": \"above\",\n    \"volumeTrend\": \"increasing\",\n    \"overallSignal\": \"positive\"\n  },\n  \"metadata\": {\n    \"agent_name\": \"Technical Analysis Agent\",\n    \"timestamp\": \"2023-10-13T15:00:00Z\"\n  }\n}"
+}

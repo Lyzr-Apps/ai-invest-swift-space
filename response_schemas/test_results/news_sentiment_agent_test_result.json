@@ -1,0 +1,51 @@
+{
+  "agent_name": "News Sentiment Agent",
+  "agent_id": "6985a0c3e17e33c11eed1b22",
+  "test_message": "Provide news sentiment analysis for Apple Inc. (AAPL)",
+  "expected_purpose": "Analyzes recent news and extracts sentiment with article citations",
+  "timestamp": "2026-02-06T08:07:20.926204",
+  "is_valid_json": true,
+  "validation_errors": [],
+  "actual_response": {
+    "status": "success",
+    "result": {
+      "overallSentiment": "positive",
+      "sentimentScore": 78,
+      "articleCount": 3,
+      "articles": [
+        {
+          "title": "Apple's Latest iPhone Release Drives Record Sales",
+          "source": "TechCrunch",
+          "date": "2023-11-01",
+          "sentiment": "positive",
+          "impact": "high"
+        },
+        {
+          "title": "Apple Faces Regulatory Challenges in Europe",
+          "source": "Financial Times",
+          "date": "2023-10-28",
+          "sentiment": "negative",
+          "impact": "medium"
+        },
+        {
+          "title": "Apple Expands Investment in Green Energy Projects",
+          "source": "Reuters",
+          "date": "2023-10-30",
+          "sentiment": "positive",
+          "impact": "medium"
+        }
+      ],
+      "keyEvents": [
+        "Record-breaking sales following new iPhone launch",
+        "Regulatory scrutiny in Europe",
+        "Increased investment in renewable energy"
+      ],
+      "sentimentTrend": "improving"
+    },
+    "metadata": {
+      "agent_name": "News Sentiment Agent",
+      "timestamp": "2023-11-02T12:00:00Z"
+    }
+  },
+  "raw_response": "{\n  \"status\": \"success\",\n  \"result\": {\n    \"overallSentiment\": \"positive\",\n    \"sentimentScore\": 78,\n    \"articleCount\": 3,\n    \"articles\": [\n      {\n        \"title\": \"Apple's Latest iPhone Release Drives Record Sales\",\n        \"source\": \"TechCrunch\",\n        \"date\": \"2023-11-01\",\n        \"sentiment\": \"positive\",\n        \"impact\": \"high\"\n      },\n      {\n        \"title\": \"Apple Faces Regulatory Challenges in Europe\",\n        \"source\": \"Financial Times\",\n        \"date\": \"2023-10-28\",\n        \"sentiment\": \"negative\",\n        \"impact\": \"medium\"\n      },\n      {\n        \"title\": \"Apple Expands Investment in Green Energy Projects\",\n        \"source\": \"Reuters\",\n        \"date\": \"2023-10-30\",\n        \"sentiment\": \"positive\",\n        \"impact\": \"medium\"\n      }\n    ],\n    \"keyEvents\": [\n      \"Record-breaking sales following new iPhone launch\",\n      \"Regulatory scrutiny in Europe\",\n      \"Increased investment in renewable energy\"\n    ],\n    \"sentimentTrend\": \"improving\"\n  },\n  \"metadata\": {\n    \"agent_name\": \"News Sentiment Agent\",\n    \"timestamp\": \"2023-11-02T12:00:00Z\"\n  }\n}"
+}

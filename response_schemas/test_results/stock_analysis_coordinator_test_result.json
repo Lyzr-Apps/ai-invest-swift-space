@@ -1,0 +1,26 @@
+{
+  "agent_name": "Stock Analysis Coordinator",
+  "agent_id": "6985a0d88ce1fc653cfdee14",
+  "test_message": "Analyze Apple Inc. (AAPL) stock. Current price: $187.42",
+  "expected_purpose": "Manager agent that synthesizes technical, fundamental, and sentiment analysis into final verdict",
+  "timestamp": "2026-02-06T08:07:33.266496",
+  "is_valid_json": true,
+  "validation_errors": [],
+  "actual_response": {
+    "status": "success",
+    "result": {
+      "verdict": "Neutral",
+      "confidence": 70,
+      "risk": "Medium",
+      "technicalSummary": "Technical indicators highlight a positive overall signal with MACD being bullish, and the current stock price ($187.42) being above both the 50-day moving average ($182.35) and the 200-day moving average ($168.72). However, the RSI at 65.4 is neutral, suggesting the stock isn't overbought.",
+      "fundamentalSummary": "Apple shows a strong earnings growth YoY of 12.5% and revenue growth of 6.2%, but the P/E ratio of 30.2 is higher than the sector average of 25, and the debt-to-equity ratio is relatively high at 2.03. This creates some moderate concerns balanced by strong growth fundamentals.",
+      "sentimentSummary": "News sentiment is neutral with a sentiment score of 55, featuring a high-impact positive report on earnings from TechCrunch, concerns about supply chain challenges reported by The Wall Street Journal, and neutral sentiment from Bloomberg on stock volatility.",
+      "explanation": "The technical signals are generally positive, with the MACD indicating bullish momentum and the stock trading above significant moving averages, implying a short-to-medium-term positive outlook. However, fundamental analysis shows a mixed picture with strong growth metrics tempered by high valuation and debt levels. Sentiment analysis shows balanced news coverage, with both positive news on services growth and negative news on potential supply chain issues. Given these mixed indicators, the stock presents a neutral outlook with medium risk. The confidence level in this assessment is moderate at 70% due to the largely stable sentiment and balanced technical and fundamental indicators."
+    },
+    "metadata": {
+      "agent_name": "Stock Analysis Coordinator",
+      "timestamp": "2023-10-21T14:45:00Z"
+    }
+  },
+  "raw_response": "{\n  \"status\": \"success\",\n  \"result\": {\n    \"verdict\": \"Neutral\",\n    \"confidence\": 70,\n    \"risk\": \"Medium\",\n    \"technicalSummary\": \"Technical indicators highlight a positive overall signal with MACD being bullish, and the current stock price ($187.42) being above both the 50-day moving average ($182.35) and the 200-day moving average ($168.72). However, the RSI at 65.4 is neutral, suggesting the stock isn't overbought.\",\n    \"fundamentalSummary\": \"Apple shows a strong earnings growth YoY of 12.5% and revenue growth of 6.2%, but the P/E ratio of 30.2 is higher than the sector average of 25, and the debt-to-equity ratio is relatively high at 2.03. This creates some moderate concerns balanced by strong growth fundamentals.\",\n    \"sentimentSummary\": \"News sentiment is neutral with a sentiment score of 55, featuring a high-impact positive report on earnings from TechCrunch, concerns about supply chain challenges reported by The Wall Street Journal, and neutral sentiment from Bloomberg on stock volatility.\",\n    \"explanation\": \"The technical signals are generally positive, with the MACD indicating bullish momentum and the stock trading above significant moving averages, implying a short-to-medium-term positive outlook. However, fundamental analysis shows a mixed picture with strong growth metrics tempered by high valuation and debt levels. Sentiment analysis shows balanced news coverage, with both positive news on services growth and negative news on potential supply chain issues. Given these mixed indicators, the stock presents a neutral outlook with medium risk. The confidence level in this assessment is moderate at 70% due to the largely stable sentiment and balanced technical and fundamental indicators.\"\n  },\n  \"metadata\": {\n    \"agent_name\": \"Stock Analysis Coordinator\",\n    \"timestamp\": \"2023-10-21T14:45:00Z\"\n  }\n}"
+}

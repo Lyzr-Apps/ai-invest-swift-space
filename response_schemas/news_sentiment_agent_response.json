@@ -1,0 +1,114 @@
+{
+  "agent_name": "News Sentiment Agent",
+  "agent_id": "6985a0c3e17e33c11eed1b22",
+  "agent_purpose": "Analyzes recent news and extracts sentiment with article citations",
+  "description": "News sentiment agent that analyzes articles and provides sentiment scores",
+  "response_schema": {
+    "status": "string",
+    "result": {
+      "overallSentiment": "string",
+      "sentimentScore": "number",
+      "articleCount": "number",
+      "articles": [
+        {
+          "title": "string",
+          "source": "string",
+          "date": "string",
+          "sentiment": "string",
+          "impact": "string"
+        }
+      ],
+      "keyEvents": [
+        "string"
+      ],
+      "sentimentTrend": "string"
+    },
+    "metadata": {
+      "agent_name": "string",
+      "timestamp": "string"
+    }
+  },
+  "example_response": {
+    "status": "success",
+    "result": {
+      "overallSentiment": "neutral",
+      "sentimentScore": 50,
+      "articleCount": 3,
+      "articles": [
+        {
+          "title": "Company Achieves Record Profit Margins",
+          "source": "Financial News Daily",
+          "date": "2023-11-05",
+          "sentiment": "positive",
+          "impact": "high"
+        },
+        {
+          "title": "Regulatory Challenges Pose Risks to Future Growth",
+          "source": "Market Watcher",
+          "date": "2023-11-04",
+          "sentiment": "negative",
+          "impact": "medium"
+        },
+        {
+          "title": "Stock Prices Steady Amidst Market Volatility",
+          "source": "Economy Today",
+          "date": "2023-11-03",
+          "sentiment": "neutral",
+          "impact": "low"
+        }
+      ],
+      "keyEvents": [
+        "Record profit margins announced",
+        "Regulatory challenges arising"
+      ],
+      "sentimentTrend": "stable"
+    },
+    "metadata": {
+      "agent_name": "News Sentiment Agent",
+      "timestamp": "2023-11-06T14:30:00Z"
+    }
+  },
+  "is_actual_tested": true,
+  "test_timestamp": "2026-02-06T08:08:02.826642",
+  "test_message_used": "Hello, provide a sample response",
+  "actual_test_response": {
+    "status": "success",
+    "result": {
+      "overallSentiment": "neutral",
+      "sentimentScore": 50,
+      "articleCount": 3,
+      "articles": [
+        {
+          "title": "Company Achieves Record Profit Margins",
+          "source": "Financial News Daily",
+          "date": "2023-11-05",
+          "sentiment": "positive",
+          "impact": "high"
+        },
+        {
+          "title": "Regulatory Challenges Pose Risks to Future Growth",
+          "source": "Market Watcher",
+          "date": "2023-11-04",
+          "sentiment": "negative",
+          "impact": "medium"
+        },
+        {
+          "title": "Stock Prices Steady Amidst Market Volatility",
+          "source": "Economy Today",
+          "date": "2023-11-03",
+          "sentiment": "neutral",
+          "impact": "low"
+        }
+      ],
+      "keyEvents": [
+        "Record profit margins announced",
+        "Regulatory challenges arising"
+      ],
+      "sentimentTrend": "stable"
+    },
+    "metadata": {
+      "agent_name": "News Sentiment Agent",
+      "timestamp": "2023-11-06T14:30:00Z"
+    }
+  }
+}

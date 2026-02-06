@@ -1,0 +1,35 @@
+{
+  "agent_name": "Fundamental Analysis Agent",
+  "agent_id": "6985a0b2301c62c7ca2c7d76",
+  "test_message": "Provide fundamental analysis for Apple Inc. (AAPL)",
+  "expected_purpose": "Evaluates company fundamentals (P/E, debt-to-equity, earnings growth)",
+  "timestamp": "2026-02-06T08:07:16.298215",
+  "is_valid_json": true,
+  "validation_errors": [],
+  "actual_response": {
+    "status": "success",
+    "result": {
+      "peRatio": 28.5,
+      "sectorAvgPE": 24.0,
+      "debtToEquity": 1.8,
+      "earningsGrowthYoY": 10.0,
+      "revenueGrowthYoY": 5.0,
+      "healthScore": 85,
+      "fundamentalSignal": "strong",
+      "concerns": [
+        "Higher than average P/E ratio might indicate overvaluation",
+        "Debt-to-equity is relatively high"
+      ],
+      "strengths": [
+        "Solid earnings growth year-over-year",
+        "Consistent revenue growth",
+        "Strong brand and market position"
+      ]
+    },
+    "metadata": {
+      "agent_name": "Fundamental Analysis Agent",
+      "timestamp": "2023-10-04T12:00:00Z"
+    }
+  },
+  "raw_response": "{\n  \"status\": \"success\",\n  \"result\": {\n    \"peRatio\": 28.5,\n    \"sectorAvgPE\": 24.0,\n    \"debtToEquity\": 1.8,\n    \"earningsGrowthYoY\": 10.0,\n    \"revenueGrowthYoY\": 5.0,\n    \"healthScore\": 85,\n    \"fundamentalSignal\": \"strong\",\n    \"concerns\": [\n      \"Higher than average P/E ratio might indicate overvaluation\",\n      \"Debt-to-equity is relatively high\"\n    ],\n    \"strengths\": [\n      \"Solid earnings growth year-over-year\",\n      \"Consistent revenue growth\",\n      \"Strong brand and market position\"\n    ]\n  },\n  \"metadata\": {\n    \"agent_name\": \"Fundamental Analysis Agent\",\n    \"timestamp\": \"2023-10-04T12:00:00Z\"\n  }\n}"
+}

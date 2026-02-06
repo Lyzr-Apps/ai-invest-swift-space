@@ -1,0 +1,79 @@
+{
+  "agent_name": "Fundamental Analysis Agent",
+  "agent_id": "6985a0b2301c62c7ca2c7d76",
+  "agent_purpose": "Evaluates company fundamentals (P/E, debt-to-equity, earnings growth)",
+  "description": "Fundamental analysis agent that evaluates financial metrics and company health",
+  "response_schema": {
+    "status": "string",
+    "result": {
+      "peRatio": "number",
+      "sectorAvgPE": "number",
+      "debtToEquity": "number",
+      "earningsGrowthYoY": "number",
+      "revenueGrowthYoY": "number",
+      "healthScore": "number",
+      "fundamentalSignal": "string",
+      "concerns": [
+        "string"
+      ],
+      "strengths": [
+        "string"
+      ]
+    },
+    "metadata": {
+      "agent_name": "string",
+      "timestamp": "string"
+    }
+  },
+  "example_response": {
+    "status": "success",
+    "result": {
+      "peRatio": 15.5,
+      "sectorAvgPE": 18.2,
+      "debtToEquity": 0.75,
+      "earningsGrowthYoY": 12.3,
+      "revenueGrowthYoY": 8.5,
+      "healthScore": 78,
+      "fundamentalSignal": "moderate",
+      "concerns": [
+        "Lower P/E ratio compared to sector average",
+        "Moderate revenue growth"
+      ],
+      "strengths": [
+        "Strong earnings growth",
+        "Healthy debt-to-equity ratio"
+      ]
+    },
+    "metadata": {
+      "agent_name": "Fundamental Analysis Agent",
+      "timestamp": "2023-10-01T12:00:00Z"
+    }
+  },
+  "is_actual_tested": true,
+  "test_timestamp": "2026-02-06T08:07:58.864640",
+  "test_message_used": "Hello, provide a sample response",
+  "actual_test_response": {
+    "status": "success",
+    "result": {
+      "peRatio": 15.5,
+      "sectorAvgPE": 18.2,
+      "debtToEquity": 0.75,
+      "earningsGrowthYoY": 12.3,
+      "revenueGrowthYoY": 8.5,
+      "healthScore": 78,
+      "fundamentalSignal": "moderate",
+      "concerns": [
+        "Lower P/E ratio compared to sector average",
+        "Moderate revenue growth"
+      ],
+      "strengths": [
+        "Strong earnings growth",
+        "Healthy debt-to-equity ratio"
+      ]
+    },
+    "metadata": {
+      "agent_name": "Fundamental Analysis Agent",
+      "timestamp": "2023-10-01T12:00:00Z"
+    }
+  }
+}

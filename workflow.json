@@ -1,0 +1,90 @@
+{
+  "nodes": [
+    {
+      "id": "input_node",
+      "type": "Input",
+      "label": "User Stock Query",
+      "nodeCategory": "input",
+      "position": {
+        "x": 100,
+        "y": 300
+      }
+    },
+    {
+      "id": "stock_coordinator",
+      "type": "Agent",
+      "label": "Stock Analysis Coordinator",
+      "nodeCategory": "agent",
+      "position": {
+        "x": 400,
+        "y": 300
+      },
+      "agentId": "6985a0d88ce1fc653cfdee14"
+    },
+    {
+      "id": "technical_agent",
+      "type": "Agent",
+      "label": "Technical Analysis Agent",
+      "nodeCategory": "agent",
+      "position": {
+        "x": 200,
+        "y": 550
+      },
+      "agentId": "6985a0a3094c8b2d4207dd88"
+    },
+    {
+      "id": "fundamental_agent",
+      "type": "Agent",
+      "label": "Fundamental Analysis Agent",
+      "nodeCategory": "agent",
+      "position": {
+        "x": 450,
+        "y": 550
+      },
+      "agentId": "6985a0b2301c62c7ca2c7d76"
+    },
+    {
+      "id": "sentiment_agent",
+      "type": "Agent",
+      "label": "News Sentiment Agent",
+      "nodeCategory": "agent",
+      "position": {
+        "x": 700,
+        "y": 550
+      },
+      "agentId": "6985a0c3e17e33c11eed1b22"
+    },
+    {
+      "id": "output_node",
+      "type": "Output",
+      "label": "Final Analysis Report",
+      "nodeCategory": "end",
+      "position": {
+        "x": 700,
+        "y": 300
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "input_node",
+      "target": "stock_coordinator"
+    },
+    {
+      "source": "stock_coordinator",
+      "target": "technical_agent"
+    },
+    {
+      "source": "stock_coordinator",
+      "target": "fundamental_agent"
+    },
+    {
+      "source": "stock_coordinator",
+      "target": "sentiment_agent"
+    },
+    {
+      "source": "stock_coordinator",
+      "target": "output_node"
+    }
+  ]
+}

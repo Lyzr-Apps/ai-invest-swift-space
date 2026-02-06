@@ -1,0 +1,36 @@
+{
+  "workflow_name": "StockAI Multi-Agent Workflow",
+  "created_at": "2026-02-06",
+  "agents": {
+    "stock_analysis_coordinator": {
+      "agent_id": "6985a0d88ce1fc653cfdee14",
+      "name": "Stock Analysis Coordinator",
+      "type": "manager",
+      "managed_agents": [
+        "6985a0a3094c8b2d4207dd88",
+        "6985a0b2301c62c7ca2c7d76",
+        "6985a0c3e17e33c11eed1b22"
+      ]
+    },
+    "technical_analysis_agent": {
+      "agent_id": "6985a0a3094c8b2d4207dd88",
+      "name": "Technical Analysis Agent",
+      "type": "sub_agent"
+    },
+    "fundamental_analysis_agent": {
+      "agent_id": "6985a0b2301c62c7ca2c7d76",
+      "name": "Fundamental Analysis Agent",
+      "type": "sub_agent"
+    },
+    "news_sentiment_agent": {
+      "agent_id": "6985a0c3e17e33c11eed1b22",
+      "name": "News Sentiment Agent",
+      "type": "sub_agent"
+    }
+  },
+  "workflow_structure": {
+    "pattern": "manager_subagent",
+    "node_count": 6,
+    "edge_count": 5
+  }
+}

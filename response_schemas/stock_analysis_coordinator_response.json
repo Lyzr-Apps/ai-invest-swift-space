@@ -1,0 +1,57 @@
+{
+  "agent_name": "Stock Analysis Coordinator",
+  "agent_id": "6985a0d88ce1fc653cfdee14",
+  "agent_purpose": "Manager agent that synthesizes technical, fundamental, and sentiment analysis into final verdict",
+  "description": "Manager agent that coordinates all analyses and provides final investment verdict",
+  "response_schema": {
+    "status": "string",
+    "result": {
+      "verdict": "string",
+      "confidence": "number",
+      "risk": "string",
+      "technicalSummary": "string",
+      "fundamentalSummary": "string",
+      "sentimentSummary": "string",
+      "explanation": "string"
+    },
+    "metadata": {
+      "agent_name": "string",
+      "timestamp": "string"
+    }
+  },
+  "example_response": {
+    "status": "success",
+    "result": {
+      "verdict": "Bullish",
+      "confidence": 85,
+      "risk": "Medium",
+      "technicalSummary": "The stock shows strong bullish patterns with moving averages crossing over.",
+      "fundamentalSummary": "The company reported a 20% increase in quarterly earnings, outreaching market expectations.",
+      "sentimentSummary": "Recent news sentiment is positive, with several analysts upgrading the stock's rating.",
+      "explanation": "The technical analysis reveals strong upward momentum, supported by favorable moving average indicators. Fundamentally, the company is performing well, with a significant rise in earnings that have exceeded expectations. Additionally, the news sentiment is positive, with multiple analysts expressing optimism about future growth. These factors collectively support a bullish outlook with medium risk due to market volatility."
+    },
+    "metadata": {
+      "agent_name": "Stock Analysis Coordinator",
+      "timestamp": "2023-10-01T12:00:00Z"
+    }
+  },
+  "is_actual_tested": true,
+  "test_timestamp": "2026-02-06T08:08:07.398944",
+  "test_message_used": "Hello, provide a sample response",
+  "actual_test_response": {
+    "status": "success",
+    "result": {
+      "verdict": "Bullish",
+      "confidence": 85,
+      "risk": "Medium",
+      "technicalSummary": "The stock shows strong bullish patterns with moving averages crossing over.",
+      "fundamentalSummary": "The company reported a 20% increase in quarterly earnings, outreaching market expectations.",
+      "sentimentSummary": "Recent news sentiment is positive, with several analysts upgrading the stock's rating.",
+      "explanation": "The technical analysis reveals strong upward momentum, supported by favorable moving average indicators. Fundamentally, the company is performing well, with a significant rise in earnings that have exceeded expectations. Additionally, the news sentiment is positive, with multiple analysts expressing optimism about future growth. These factors collectively support a bullish outlook with medium risk due to market volatility."
+    },
+    "metadata": {
+      "agent_name": "Stock Analysis Coordinator",
+      "timestamp": "2023-10-01T12:00:00Z"
+    }
+  }
+}
